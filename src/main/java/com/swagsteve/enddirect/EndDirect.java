@@ -16,6 +16,7 @@ public final class EndDirect extends JavaPlugin implements Listener {
         //Config
         this.getConfig().options().copyDefaults();
         this.getConfig().addDefault("Options.IsDragonDead", false);
+        this.getConfig().addDefault("Options.DragonKillMessage", "You Have Defeated The Dragon! Travelling To The End Seems Easier Now...");
         saveDefaultConfig();
 
         //Events
@@ -52,8 +53,7 @@ public final class EndDirect extends JavaPlugin implements Listener {
             if (e.getEntity().getKiller() instanceof Player) {
                 Player p = e.getEntity().getKiller().getPlayer();
 
-                p.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "You Have Defeated The Dragon! Travelling To The End Seems Easier Now...");
-                p.playSound(p.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, SoundCategory.MASTER, 1, 1);
+                p.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + this.getConfig().getString("Options.DragonKillMessage"));
             }
 
             getConfig().set("Options.IsDragonDead", true);

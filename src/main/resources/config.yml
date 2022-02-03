@@ -1,2 +1,3 @@
 Options:
   IsDragonDead: false
+  DragonKillMessage: 'You Have Defeated The Dragon! Travelling To The End Seems Easier Now...'
