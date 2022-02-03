@@ -1,5 +1,7 @@
 # EndDirect
 
+###### Image coming soon
+
 ## Allows Direct Travel Between The End And Overworld.
 
 ### Want to get to the end? Just fly up.
