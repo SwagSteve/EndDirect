@@ -15,3 +15,6 @@
 ##### This plugin current ONLY works with versions 1.18 > 1.18.1
 
 ![alt text](https://i.postimg.cc/NFyJf0j3/showcase.png)
+
+
+![alt text](https://i.postimg.cc/vHvgZw4B/ezgif-com-gif-maker.gif)
