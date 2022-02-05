@@ -12,6 +12,6 @@
 
 ### This feature unlocks after you kill the dragon, but can be toggled on or off manually within the config.
 
-![alt text](https://i.postimg.cc/NFyJf0j3/showcase.png)
-
 ##### This plugin current ONLY works with versions 1.18 > 1.18.1
+
+![alt text](https://i.postimg.cc/NFyJf0j3/showcase.png)
