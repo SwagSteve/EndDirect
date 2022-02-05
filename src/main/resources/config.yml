@@ -5,3 +5,7 @@ Options:
   DragonKillMessageEnabled: true
   # DragonKillMessage - Set the custom message to send to all players when a player kills the dragon. (Color codes supported, eg: "&a", "&c", "&l", etc).
   DragonKillMessage: 'You Have Defeated The Dragon! Travelling To The End Seems Easier Now...'
+Setup:
+  # IMPORTANT - Enter world names from server file directory. Default overworld would be 'world', default end would be 'world_the_end'.
+  Overworld: 'world'
+  End: 'world_the_end'
