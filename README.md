@@ -18,3 +18,6 @@
 
 
 ![alt text](https://i.postimg.cc/vHvgZw4B/ezgif-com-gif-maker.gif)
+
+
+##### If you have any issues with this plugin please voice them in the GitHub issues tab, not in the review section.
