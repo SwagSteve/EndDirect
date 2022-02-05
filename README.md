@@ -2,7 +2,7 @@
 
 ![alt text](https://i.postimg.cc/y8GMF2wX/ed-banner1.png)
 
-## Allows Direct Travel Between The End And Overworld.
+## Allow Direct Travel Between The End And Overworld.
 
 ### Want to get to the end? Just fly up.
 
