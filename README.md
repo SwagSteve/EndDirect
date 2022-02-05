@@ -12,4 +12,6 @@
 
 ### This feature unlocks after you kill the dragon.
 
+![alt text](https://i.postimg.cc/NFyJf0j3/showcase.png)
+
 ##### This plugin is currently in beta phase.
