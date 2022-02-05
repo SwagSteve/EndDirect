@@ -6,9 +6,9 @@
 
 ![alt text](https://i.postimg.cc/J4vxKmzn/ed-about.png)
 
-### Want to get to the end? Just fly up.
+### Want to get to the end? Just fly up. You enter the end once you fly above Y level 320
 
-### Want to get back to the overworld? Just fly down.
+### Want to get back to the overworld? Just fly down. You enter the overworld once you fly under Y level -10
 
 ### This feature unlocks after you kill the dragon.
 
