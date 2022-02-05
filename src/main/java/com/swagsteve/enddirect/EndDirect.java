@@ -57,7 +57,7 @@ public final class EndDirect extends JavaPlugin implements Listener {
                     }
                 }
             }
-        },0L, 5L);
+        },0L, 10L);
     }
 
     @EventHandler
