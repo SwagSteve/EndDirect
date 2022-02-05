@@ -1,6 +1,6 @@
 # EndDirect
 
-###### Image coming soon
+![alt text](https://i.postimg.cc/y8GMF2wX/ed-banner1.png)
 
 ## Allows Direct Travel Between The End And Overworld.
 
