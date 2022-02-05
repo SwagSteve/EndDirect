@@ -19,6 +19,9 @@ public final class EndDirect extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
 
+        //Enable MSG
+        System.out.println("[ED] Enabled!");
+
         //Instance
         instance = this;
 
@@ -83,6 +86,9 @@ public final class EndDirect extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
+
+        //Enable MSG
+        System.out.println("[ED] Disabled!");
 
         saveConfig();
 
