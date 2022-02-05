@@ -2,3 +2,5 @@ name: EndDirect
 version: ${project.version}
 main: com.swagsteve.enddirect.EndDirect
 api-version: 1.18
+commands:
+  ed-reload:

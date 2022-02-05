@@ -1,3 +1,7 @@
 Options:
+  # IsDragonDead - Enable this if you want to enable the ability to travel, it will automatically update to 'true' when the dragon is killed.
   IsDragonDead: false
+  # DragonKillMessageEnabled - Set if you want to enable or disable the message to notify players of the dragon's death.
+  DragonKillMessageEnabled: true
+  # DragonKillMessage - Set the custom message to send to all players when a player kills the dragon. (Color codes supported, eg: "&a", "&c", "&l", etc).
   DragonKillMessage: 'You Have Defeated The Dragon! Travelling To The End Seems Easier Now...'

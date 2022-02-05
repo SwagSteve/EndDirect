@@ -10,17 +10,30 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class EndDirect extends JavaPlugin implements Listener {
 
+    //Instance
+    private static EndDirect instance;
+    public static EndDirect getInstance(){
+        return instance;
+    }
+
     @Override
     public void onEnable() {
+
+        //Instance
+        instance = this;
 
         //Config
         this.getConfig().options().copyDefaults();
         this.getConfig().addDefault("Options.IsDragonDead", false);
         this.getConfig().addDefault("Options.DragonKillMessage", "You Have Defeated The Dragon! Travelling To The End Seems Easier Now...");
+        this.getConfig().addDefault("Options.DragonKillMessageEnabled", true);
         saveDefaultConfig();
 
         //Events
         Bukkit.getPluginManager().registerEvents(this, this);
+
+        //Commmands
+        this.getCommand("ed-reload").setExecutor(new ReloadCommand());
 
         //Main Code
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
@@ -50,16 +63,20 @@ public final class EndDirect extends JavaPlugin implements Listener {
     public void onDragonKill(EntityDeathEvent e) {
         if (e.getEntity() instanceof EnderDragon && this.getConfig().getBoolean("Options.IsDragonDead") == false) {
 
-            if (e.getEntity().getKiller() instanceof Player) {
-                Player p = e.getEntity().getKiller().getPlayer();
+            if (this.getConfig().getBoolean("Options.DragonKillMessageEnabled") == true) {
+                if (e.getEntity().getKiller() instanceof Player) {
 
-                p.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + this.getConfig().getString("Options.DragonKillMessage"));
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+
+                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("Options.DragonKillMessage")));
+
+                    }
+                }
+
+                getConfig().set("Options.IsDragonDead", true);
+                saveConfig();
+                reloadConfig();
             }
-
-            getConfig().set("Options.IsDragonDead", true);
-            saveConfig();
-            reloadConfig();
-
         }
     }
 
