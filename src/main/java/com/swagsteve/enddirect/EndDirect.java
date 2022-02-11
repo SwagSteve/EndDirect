@@ -32,6 +32,10 @@ public final class EndDirect extends JavaPlugin implements Listener {
         this.getConfig().addDefault("Options.DragonKillMessageEnabled", true);
         this.getConfig().addDefault("Setup.Overworld", "world");
         this.getConfig().addDefault("Setup.End", "world_the_end");
+        this.getConfig().addDefault("Setup.Overworld-TP-Y-Level", 320);
+        this.getConfig().addDefault("Setup.End-TP-Y-Level", -5);
+        this.getConfig().addDefault("Setup.End-TP-To", 20);
+        this.getConfig().addDefault("Setup.Overworld-TP-To", 300);
         saveDefaultConfig();
 
         //Events
@@ -50,11 +54,11 @@ public final class EndDirect extends JavaPlugin implements Listener {
                         Double x = p.getLocation().getX();
                         Double z = p.getLocation().getZ();
 
-                        if (p.getLocation().getWorld().getEnvironment().equals(World.Environment.NORMAL) && p.getLocation().getY() > 319) {
-                            Location endTp = new Location(Bukkit.getWorld(getConfig().getString("Setup.End")),x,20,z);
+                        if (p.getLocation().getWorld().getEnvironment().equals(World.Environment.NORMAL) && p.getLocation().getY() > getConfig().getInt("Setup.Overworld-TP-Y-Level")) {
+                            Location endTp = new Location(Bukkit.getWorld(getConfig().getString("Setup.End")),x,getConfig().getInt("Setup.End-TP-To"),z);
                             p.teleport(endTp);
-                        } else if (p.getLocation().getWorld().getEnvironment().equals(World.Environment.THE_END) && p.getLocation().getY() < -10) {
-                            Location ovwTp = new Location(Bukkit.getWorld(getConfig().getString("Setup.Overworld")),x,300,z);
+                        } else if (p.getLocation().getWorld().getEnvironment().equals(World.Environment.THE_END) && p.getLocation().getY() < getConfig().getInt("Setup.End-TP-Y-Level")) {
+                            Location ovwTp = new Location(Bukkit.getWorld(getConfig().getString("Setup.Overworld")),x,getConfig().getInt("Setup.Overworld-TP-To"),z);
                             p.teleport(ovwTp);
                         }
                     }

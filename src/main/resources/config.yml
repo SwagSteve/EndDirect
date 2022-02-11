@@ -9,3 +9,9 @@ Setup:
   # IMPORTANT - Enter world names from server file directory. Default overworld would be 'world', default end would be 'world_the_end'.
   Overworld: 'world'
   End: 'world_the_end'
+  # World Y Levels To Be Teleported From, (only change if you know what you're doing)
+  Overworld-TP-Y-Level: 320
+  End-TP-Y-Level: -5
+  # World Y Levels To Be Teleported To, (only change if you know what you're doing)
+  End-TP-To: 20
+  Overworld-TP-To: 300
