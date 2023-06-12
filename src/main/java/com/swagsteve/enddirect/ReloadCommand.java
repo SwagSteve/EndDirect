@@ -1,8 +1,6 @@
 package com.swagsteve.enddirect;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Sound;
-import org.bukkit.SoundCategory;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -18,13 +16,10 @@ public class ReloadCommand implements CommandExecutor {
             Player p = (Player) sender;
 
             if (p.isOp()) {
-
-                EndDirect.getInstance().reloadConfig();
-                p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lConfig Successfully Reloaded!"));
-                p.playSound(p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1, 1);
-
+                EndDirect.reloadConfiguration();
+                p.sendMessage(ChatColor.translateAlternateColorCodes('&', "[&dDC&r] &a&lConfig successfully reloaded!"));
             } else {
-                p.sendMessage("&c&lYou Don't Have Permission To Use This Command!");
+                p.sendMessage("&c&lYou don't have permission to use this command!");
             }
         }
         return false;

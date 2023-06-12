@@ -1,5 +1,6 @@
 package com.swagsteve.enddirect;
 
+import Versions.EndDirect1_13;
 import org.bukkit.*;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Player;
@@ -7,6 +8,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
+import java.io.File;
 
 public final class EndDirect extends JavaPlugin implements Listener {
 
@@ -16,72 +20,81 @@ public final class EndDirect extends JavaPlugin implements Listener {
         return instance;
     }
 
+    //Version code
+    public static EDFunctions EDFunctions;
+
+    //Config cache
+    public static Boolean isdragondead, dragonkillmessageenabled;
+    public static String dragonkillmessage, overworld, end;
+    public static Integer overworld_tp_y_level, end_tp_y_level, end_tp_to, overworld_tp_to;
+
     @Override
     public void onEnable() {
 
         //Enable MSG
-        System.out.println("[ED] Enabled!");
+        getLogger().info("Enabled!");
 
         //Instance
         instance = this;
 
         //Config
-        this.getConfig().options().copyDefaults();
-        this.getConfig().addDefault("Options.IsDragonDead", false);
-        this.getConfig().addDefault("Options.DragonKillMessage", "You Have Defeated The Dragon! Travelling To The End Seems Easier Now...");
-        this.getConfig().addDefault("Options.DragonKillMessageEnabled", true);
-        this.getConfig().addDefault("Setup.Overworld", "world");
-        this.getConfig().addDefault("Setup.End", "world_the_end");
-        this.getConfig().addDefault("Setup.Overworld-TP-Y-Level", 320);
-        this.getConfig().addDefault("Setup.End-TP-Y-Level", -5);
-        this.getConfig().addDefault("Setup.End-TP-To", 20);
-        this.getConfig().addDefault("Setup.Overworld-TP-To", 300);
-        saveDefaultConfig();
+        File tempConfig = new File(getDataFolder(), "config.yml");
+        if (!tempConfig.exists()) {
+            resetConfig();
+        }
+
+        //Cache config values
+        try {
+            cacheConfig();
+        } catch (Exception e) {
+            resetConfig();
+            cacheConfig();
+        }
 
         //Events
         Bukkit.getPluginManager().registerEvents(this, this);
 
-        //Commmands
+        // Commands
         this.getCommand("ed-reload").setExecutor(new ReloadCommand());
 
+        //Version management
+        String version = Bukkit.getVersion();
+        boolean b = version.contains("1.13") || version.contains("1.14")
+                || version.contains("1.15") || version.contains("1.16")
+                || version.contains("1.17") || version.contains("1.18")
+                || version.contains("1.19") || version.contains("1.20");
+
+        if (b) {
+            EDFunctions = new EndDirect1_13();
+        } else {
+            getServer().getPluginManager().disablePlugin(this);
+            getLogger().info("Unsupported version detected! Disabling plugin...");
+        }
+
         //Main Code
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+        new BukkitRunnable() {
             @Override
             public void run() {
-                if (getConfig().getBoolean("Options.IsDragonDead") == true) {
-                    for (Player p :Bukkit.getOnlinePlayers()) {
-
-                        Double x = p.getLocation().getX();
-                        Double z = p.getLocation().getZ();
-
-                        if (p.getLocation().getWorld().getEnvironment().equals(World.Environment.NORMAL) && p.getLocation().getY() > getConfig().getInt("Setup.Overworld-TP-Y-Level")) {
-                            Location endTp = new Location(Bukkit.getWorld(getConfig().getString("Setup.End")),x,getConfig().getInt("Setup.End-TP-To"),z);
-                            p.teleport(endTp);
-                        } else if (p.getLocation().getWorld().getEnvironment().equals(World.Environment.THE_END) && p.getLocation().getY() < getConfig().getInt("Setup.End-TP-Y-Level")) {
-                            Location ovwTp = new Location(Bukkit.getWorld(getConfig().getString("Setup.Overworld")),x,getConfig().getInt("Setup.Overworld-TP-To"),z);
-                            p.teleport(ovwTp);
-                        }
-                    }
-                }
+                //Run check
+                EDFunctions.runCheck();
             }
-        },0L, 10L);
+        }.runTaskTimer(this, 0L, 10L);
     }
 
     @EventHandler
     public void onDragonKill(EntityDeathEvent e) {
-        if (e.getEntity() instanceof EnderDragon && this.getConfig().getBoolean("Options.IsDragonDead") == false) {
+        if (e.getEntity() instanceof EnderDragon && !isdragondead) {
 
-            if (this.getConfig().getBoolean("Options.DragonKillMessageEnabled") == true) {
-                if (e.getEntity().getKiller() instanceof Player) {
+            if (dragonkillmessageenabled) {
+                if (e.getEntity().getKiller() != null) {
 
                     for (Player p : Bukkit.getOnlinePlayers()) {
-
-                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("Options.DragonKillMessage")));
-
+                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', dragonkillmessage));
                     }
                 }
 
-                getConfig().set("Options.IsDragonDead", true);
+                isdragondead = true;
+                getConfig().set("Options.isdragondead", true);
                 saveConfig();
                 reloadConfig();
             }
@@ -90,11 +103,35 @@ public final class EndDirect extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
-
-        //Enable MSG
-        System.out.println("[ED] Disabled!");
-
+        //Disable MSG
+        getLogger().info("Disabled!");
         saveConfig();
+    }
 
+    //Config methods
+    public void resetConfig() {
+        getLogger().info("Generating config...");
+        saveDefaultConfig();
+        reloadConfig();
+    }
+    public void cacheConfig() {
+        // Booleans
+        isdragondead = getConfig().getBoolean("Options.isdragondead");
+        dragonkillmessageenabled = getConfig().getBoolean("Options.dragonkillmessageenabled");
+
+        // Strings
+        dragonkillmessage = getConfig().getString("Options.dragonkillmessage");
+        overworld = getConfig().getString("Setup.overworld");
+        end = getConfig().getString("Setup.end");
+
+        // Integers
+        overworld_tp_y_level = getConfig().getInt("Setup.overworld-tp-y-level");
+        end_tp_y_level = getConfig().getInt("Setup.end-tp-y-level");
+        end_tp_to = getConfig().getInt("Setup.end-tp-to");
+        overworld_tp_to = getConfig().getInt("Setup.overworld-tp-to");
+    }
+    public static void reloadConfiguration() {
+        EndDirect.getInstance().reloadConfig();
+        EndDirect.getInstance().cacheConfig();
     }
 }

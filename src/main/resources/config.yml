@@ -1,17 +1,22 @@
 Options:
-  # IsDragonDead - Enable this if you want to enable the ability to travel, it will automatically update to 'true' when the dragon is killed.
-  IsDragonDead: false
-  # DragonKillMessageEnabled - Set if you want to enable or disable the message to notify players of the dragon's death.
-  DragonKillMessageEnabled: true
-  # DragonKillMessage - Set the custom message to send to all players when a player kills the dragon. (Color codes supported, eg: "&a", "&c", "&l", etc).
-  DragonKillMessage: 'You Have Defeated The Dragon! Travelling To The End Seems Easier Now...'
+  # isdragondead - Enable this if you want to enable the ability to travel, it will automatically update to 'true' when the dragon is killed.
+  isdragondead: false
+
+  # dragonkillmessageenabled - Set if you want to enable or disable the message to notify players of the dragon's death.
+  dragonkillmessageenabled: true
+
+  # dragonkillmessage - Set the custom message to send to all players when a player kills the dragon. (Color codes supported, eg: "&a", "&c", "&l", etc).
+  dragonkillmessage: 'You have defeated the dragon! Travelling to the End seems easier now...'
+
 Setup:
   # IMPORTANT - Enter world names from server file directory. Default overworld would be 'world', default end would be 'world_the_end'.
-  Overworld: 'world'
-  End: 'world_the_end'
+  overworld: 'world'
+  end: 'world_the_end'
+
   # World Y Levels To Be Teleported From, (only change if you know what you're doing)
-  Overworld-TP-Y-Level: 320
-  End-TP-Y-Level: -5
+  overworld-tp-y-level: 320
+  end-tp-y-level: -5
+
   # World Y Levels To Be Teleported To, (only change if you know what you're doing)
-  End-TP-To: 20
-  Overworld-TP-To: 300
+  end-tp-to: 20
+  overworld-tp-to: 300
