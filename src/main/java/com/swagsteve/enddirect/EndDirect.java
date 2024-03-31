@@ -9,8 +9,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
-import java.io.File;
 
 public final class EndDirect extends JavaPlugin implements Listener {
 
@@ -38,8 +36,11 @@ public final class EndDirect extends JavaPlugin implements Listener {
         instance = this;
 
         //Config
-        File tempConfig = new File(getDataFolder(), "config.yml");
-        if (!tempConfig.exists()) {
+        try {
+            getConfig().options().copyDefaults(true);
+            saveDefaultConfig();
+        } catch (Exception e) {
+            getLogger().severe("Error loading config, re-generating it...");
             resetConfig();
         }
 
@@ -105,33 +106,38 @@ public final class EndDirect extends JavaPlugin implements Listener {
     public void onDisable() {
         //Disable MSG
         getLogger().info("Disabled!");
-        saveConfig();
     }
 
     //Config methods
-    public void resetConfig() {
-        getLogger().info("Generating config...");
-        saveDefaultConfig();
-        reloadConfig();
+    public static void resetConfig() {
+        EndDirect.getInstance().getLogger().info("Generating config...");
+        EndDirect.getInstance().getConfig().options().copyDefaults(true);
+        EndDirect.getInstance().saveDefaultConfig();
+        EndDirect.getInstance().reloadConfig();
     }
-    public void cacheConfig() {
+    public static void cacheConfig() {
         // Booleans
-        isdragondead = getConfig().getBoolean("Options.isdragondead");
-        dragonkillmessageenabled = getConfig().getBoolean("Options.dragonkillmessageenabled");
+        isdragondead = EndDirect.getInstance().getConfig().getBoolean("Options.isdragondead");
+        dragonkillmessageenabled = EndDirect.getInstance().getConfig().getBoolean("Options.dragonkillmessageenabled");
 
         // Strings
-        dragonkillmessage = getConfig().getString("Options.dragonkillmessage");
-        overworld = getConfig().getString("Setup.overworld");
-        end = getConfig().getString("Setup.end");
+        dragonkillmessage = EndDirect.getInstance().getConfig().getString("Options.dragonkillmessage");
+        overworld = EndDirect.getInstance().getConfig().getString("Setup.overworld");
+        end = EndDirect.getInstance().getConfig().getString("Setup.end");
 
         // Integers
-        overworld_tp_y_level = getConfig().getInt("Setup.overworld-tp-y-level");
-        end_tp_y_level = getConfig().getInt("Setup.end-tp-y-level");
-        end_tp_to = getConfig().getInt("Setup.end-tp-to");
-        overworld_tp_to = getConfig().getInt("Setup.overworld-tp-to");
+        overworld_tp_y_level = EndDirect.getInstance().getConfig().getInt("Setup.overworld-tp-y-level");
+        end_tp_y_level = EndDirect.getInstance().getConfig().getInt("Setup.end-tp-y-level");
+        end_tp_to = EndDirect.getInstance().getConfig().getInt("Setup.end-tp-to");
+        overworld_tp_to = EndDirect.getInstance().getConfig().getInt("Setup.overworld-tp-to");
     }
     public static void reloadConfiguration() {
-        EndDirect.getInstance().reloadConfig();
-        EndDirect.getInstance().cacheConfig();
+        try {
+            EndDirect.getInstance().reloadConfig();
+            cacheConfig();
+        } catch (Exception e) {
+            resetConfig();
+            cacheConfig();
+        }
     }
 }
