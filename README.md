@@ -1,7 +1,5 @@
 # EndDirect
 
-## <ins>[Download The Plugin](https://www.dropbox.com/sh/gthmem3y7s4zu3l/AACD6-NRQC1Ou_EjpBtnVV1sa?dl=0)</ins>
-
 ![alt text](https://i.postimg.cc/y8GMF2wX/ed-banner1.png)
 
 ## Allow Direct Travel Between The End And Overworld.
